@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
 
     //public int damagePerShot = 20;
-    public float timeBetweenBullets = 0.15f;
+    public float timeBetweenBullets = 1.2f;
     public float range = 100f;
 
     [HideInInspector]
@@ -20,6 +20,8 @@ public class PlayerShoot : MonoBehaviour
     float timer;
     ParticleSystem gunParticles;
     LineRenderer gunLine;
+    private GunAnimation gunAnim;
+    private GunSound gunSound;
     float effectsDisplayTime = 0.2f;
 
 
@@ -27,6 +29,8 @@ public class PlayerShoot : MonoBehaviour
     {
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
+        gunAnim = transform.parent.GetComponent<GunAnimation>();
+        gunSound = GetComponent<GunSound>();
     }
 
 
@@ -87,5 +91,8 @@ public class PlayerShoot : MonoBehaviour
         {
             gunLine.SetPosition(1, transform.position + transform.forward * range);
         }
+        
+        gunAnim.Shoot(timeBetweenBullets);
+        gunSound.PlaySound();
     }
 }
