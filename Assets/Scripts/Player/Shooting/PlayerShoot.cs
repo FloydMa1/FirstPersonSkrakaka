@@ -14,7 +14,8 @@ public class PlayerShoot : MonoBehaviour
     public float targetY;
     public float targetZ;
 
-    public GameObject particleObject;
+    public GameObject particleHit;
+    public GameObject particleMiss;
 
     float timer;
     ParticleSystem gunParticles;
@@ -64,14 +65,23 @@ public class PlayerShoot : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out shootHit, range))
         {
-            print("Found an object - distance: " + shootHit.distance + " target x: " + shootHit.transform.position.x + " target y: " + shootHit.transform.position.y + " target z: " + shootHit.transform.position.z);
+            
             gunLine.SetPosition(1, shootHit.point);
 
-            targetX = shootHit.transform.position.x;
-            targetY = shootHit.transform.position.y;
-            targetZ = shootHit.transform.position.z;
+            targetX = shootHit.point.x;
+            targetY = shootHit.point.y;
+            targetZ = shootHit.point.z;
 
-            Instantiate(particleObject, shootHit.transform.position, Quaternion.identity);
+            if (shootHit.collider.tag == "Target")
+            {
+                var a = Instantiate(particleHit, shootHit.point, Quaternion.identity);
+                    Destroy(a, 4);
+            }
+            else
+            {
+                var b = Instantiate(particleMiss, shootHit.point, Quaternion.identity);
+                    Destroy(b, 4);
+            }
         }
         else
         {
