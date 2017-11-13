@@ -9,11 +9,14 @@ public class PlayerShoot : MonoBehaviour
     public float timeBetweenBullets = 0.15f;
     public float range = 100f;
 
+    [HideInInspector]
+    public float targetX;
+    public float targetY;
+    public float targetZ;
+
+    public GameObject particleObject;
 
     float timer;
-    Ray shootRay = new Ray();
-    RaycastHit shootHit;
-    //int shootableMask;
     ParticleSystem gunParticles;
     LineRenderer gunLine;
     float effectsDisplayTime = 0.2f;
@@ -39,7 +42,7 @@ public class PlayerShoot : MonoBehaviour
         {
             ToggleShootEffects(false);
         }
-        Debug.DrawRay(transform.position, shootRay.direction, Color.blue);
+        Debug.DrawRay(transform.position, transform.forward, Color.blue);
     }
 
     private void ToggleShootEffects(bool on)
@@ -57,18 +60,22 @@ public class PlayerShoot : MonoBehaviour
         gunParticles.Play();
 
         ToggleShootEffects(true);
+        RaycastHit shootHit;
 
-        shootRay.origin = transform.position;
-        shootRay.direction = transform.forward;
-
-        if (Physics.Raycast(shootRay, out shootHit, range))
+        if (Physics.Raycast(transform.position, transform.forward, out shootHit, range))
         {
-            
+            print("Found an object - distance: " + shootHit.distance + " target x: " + shootHit.transform.position.x + " target y: " + shootHit.transform.position.y + " target z: " + shootHit.transform.position.z);
             gunLine.SetPosition(1, shootHit.point);
+
+            targetX = shootHit.transform.position.x;
+            targetY = shootHit.transform.position.y;
+            targetZ = shootHit.transform.position.z;
+
+            Instantiate(particleObject, shootHit.transform.position, Quaternion.identity);
         }
         else
         {
-            gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+            gunLine.SetPosition(1, transform.position + transform.forward * range);
         }
     }
 }
