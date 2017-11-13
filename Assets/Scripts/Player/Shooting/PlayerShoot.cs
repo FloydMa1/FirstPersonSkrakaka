@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
 
     //public int damagePerShot = 20;
-    public float timeBetweenBullets = 0.15f;
+    public float timeBetweenBullets = 0.5f;
     public float range = 100f;
 
 
@@ -16,6 +16,7 @@ public class PlayerShoot : MonoBehaviour
     //int shootableMask;
     ParticleSystem gunParticles;
     LineRenderer gunLine;
+    private GunAnimation gunAnim;
     float effectsDisplayTime = 0.2f;
 
 
@@ -23,6 +24,7 @@ public class PlayerShoot : MonoBehaviour
     {
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
+        gunAnim = transform.parent.GetComponent<GunAnimation>();
     }
 
 
@@ -60,7 +62,7 @@ public class PlayerShoot : MonoBehaviour
 
         shootRay.origin = transform.position;
         shootRay.direction = transform.forward;
-
+        
         if (Physics.Raycast(shootRay, out shootHit, range))
         {
             
@@ -70,5 +72,7 @@ public class PlayerShoot : MonoBehaviour
         {
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
+        
+        gunAnim.Shoot(timeBetweenBullets);
     }
 }
