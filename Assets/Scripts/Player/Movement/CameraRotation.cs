@@ -7,8 +7,10 @@ public class CameraRotation : MonoBehaviour {
     private GameObject cameraObject;
     private InputManager inputManager;
 
-    [SerializeField]
-    private float cameraSpeed = 5;
+    [SerializeField] private float cameraSpeed = 5;
+	[SerializeField] private float viewDegree = 90;
+
+    private float cameraRotation = 0;
 
     /*
      * Initialize the required components components
@@ -23,8 +25,11 @@ public class CameraRotation : MonoBehaviour {
 
 	void Update () {
         //rotate the entire gameobject
-        this.transform.Rotate(0, inputManager.GetXRot()* cameraSpeed, 0);
+        transform.Rotate(0, inputManager.GetXRot()* cameraSpeed, 0);
         //rotate the camera only. 
-		cameraObject.transform.Rotate(inputManager.GetYRot() * cameraSpeed, 0, 0);
+	    cameraRotation = Mathf.Clamp(cameraRotation + inputManager.GetYRot() * cameraSpeed,
+			-viewDegree, viewDegree);
+		cameraObject.transform.localEulerAngles =
+			new Vector3(cameraRotation, 0, 0);
 	}
 }
