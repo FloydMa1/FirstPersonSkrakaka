@@ -26,7 +26,6 @@ public class PlayerJump : MonoBehaviour {
         if (inputManager.Jump() && Physics.Raycast(transform.position, down, 2))
         {
             rigidbody.AddForce(transform.up * jumpPower);
-            Debug.Log(jumpPower);
         }
     }
 }
