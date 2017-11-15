@@ -32,6 +32,10 @@ public class InputManager : MonoBehaviour
 	{
         return Input.GetAxis(Strings.Movement.HORIZONTAL) > axisThreshhold;
 	}
+    public bool Jump()
+    {
+        return Input.GetKeyDown(KeyCode.Space);
+    }
 
     /* 
      * functions that return values for the mouse position
