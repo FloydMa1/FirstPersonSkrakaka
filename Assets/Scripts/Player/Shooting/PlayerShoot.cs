@@ -67,7 +67,7 @@ public class PlayerShoot : MonoBehaviour
         ToggleShootEffects(true);
         RaycastHit shootHit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out shootHit, range))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out shootHit, range))
         {
             
             gunLine.SetPosition(1, shootHit.point);
