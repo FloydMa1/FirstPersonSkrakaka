@@ -14,7 +14,8 @@ public class PlayerShoot : MonoBehaviour
     public float targetY;
     public float targetZ;
 
-    public GameObject particleObject;
+    public GameObject particleHit;
+    public GameObject particleMiss;
 
     float timer;
     ParticleSystem gunParticles;
@@ -66,8 +67,9 @@ public class PlayerShoot : MonoBehaviour
         ToggleShootEffects(true);
         RaycastHit shootHit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out shootHit, range))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out shootHit, range))
         {
+<<<<<<< HEAD
             gunLine.SetPosition(1, shootHit.point);
 
             targetX = Mathf.Ceil(shootHit.transform.position.x);
@@ -78,6 +80,25 @@ public class PlayerShoot : MonoBehaviour
             StartCoroutine(Doquery());
 
             Instantiate(particleObject, shootHit.transform.position, Quaternion.identity);
+=======
+            
+            gunLine.SetPosition(1, shootHit.point);
+
+            targetX = shootHit.point.x;
+            targetY = shootHit.point.y;
+            targetZ = shootHit.point.z;
+
+            if (shootHit.collider.tag == "Target")
+            {
+                var a = Instantiate(particleHit, shootHit.point, Quaternion.identity);
+                    Destroy(a, 4);
+            }
+            else
+            {
+                var b = Instantiate(particleMiss, shootHit.point, Quaternion.identity);
+                    Destroy(b, 4);
+            }
+>>>>>>> ba10f9e4a29677d9ad913b21ed7c2a6c0b059990
         }
         else
         {
