@@ -86,6 +86,7 @@ public class PlayerShoot : MonoBehaviour
                 var b = Instantiate(particleMiss, shootHit.point, Quaternion.identity);
                     Destroy(b, 4);
             }
+
         }
         else
         {
