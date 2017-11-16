@@ -69,6 +69,18 @@ public class PlayerShoot : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out shootHit, range))
         {
+<<<<<<< HEAD
+            gunLine.SetPosition(1, shootHit.point);
+
+            targetX = Mathf.Ceil(shootHit.transform.position.x);
+            targetY = Mathf.Ceil(shootHit.transform.position.y);
+            targetZ = Mathf.Ceil(shootHit.transform.position.z);
+            print("Found an object - distance: " + shootHit.distance + " target x: " + targetX + " target y: " + targetY + " target z: " + targetZ);
+
+            StartCoroutine(Doquery());
+
+            Instantiate(particleObject, shootHit.transform.position, Quaternion.identity);
+=======
             
             gunLine.SetPosition(1, shootHit.point);
 
@@ -86,7 +98,11 @@ public class PlayerShoot : MonoBehaviour
                 var b = Instantiate(particleMiss, shootHit.point, Quaternion.identity);
                     Destroy(b, 4);
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ba10f9e4a29677d9ad913b21ed7c2a6c0b059990
+>>>>>>> 8298d7ec5d6fad855dac91ab22f41500c91f67bc
         }
         else
         {
@@ -95,5 +111,12 @@ public class PlayerShoot : MonoBehaviour
         
         gunAnim.Shoot(timeBetweenBullets);
         gunSound.PlaySound();
+
+        
+    }
+    IEnumerator Doquery()
+    {
+        WWW request = new WWW("http://22355.hosts.ma-cloud.nl/bewijzenmap/p2.1/GPR/moan.php?t_x=" + targetX + "&t_y="+ targetY +"&t_z="+ targetZ +"&p_id=1");
+        yield return request;
     }
 }
