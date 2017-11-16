@@ -16,6 +16,8 @@ public class CameraRotation : MonoBehaviour {
      * Initialize the required components components
      */
     void Start(){
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         cameraObject = Camera.main.gameObject;
         //check if the inputmanager is present. If it's not, add it.
         if(!(inputManager = this.GetComponent<InputManager>())){
